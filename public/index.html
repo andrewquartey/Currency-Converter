@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+       <title>Currency Converter</title> 
+       <meta charset="utf-8">
+       <link rel="stylesheet" href="/vendors/bootstrap/dist/css/bootstrap.min.css">
+       <link rel="stylesheet" href="/style.css">
+       
+    </head>
+
+    <body>
+        <div class="panel">
+
+                Convert <input type="text" id="oldValue"> 
+                <select id="oldCurrency">
+                    <option>Select one</option>
+                    
+                        <option value="{{this}}" > {{this}} </option>
+
+                </select>
+                To 
+                <select id="newCurrency">
+                    <option>Select one</option>
+
+                        <!-- <option> {{this}} </option> -->
+
+                </select>
+                <button onclick="convert()">Convert</button>
+                <div id="results"></div>
+
+        </div>
+    </body>
+    <script src="/sw.js"></script>
+    <script>
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                var myArr = JSON.parse(this.responseText);
+                myFunction(myArr);
+                // document.getElementById("oldCurrency").appendChild(this.responseText)
+            }
+        };
+        xhttp.open("GET", "https://free.currencyconverterapi.com/api/v5/currencies", true);
+        xhttp.send();
+
+        function myFunction(arr) {
+            let select1 = document.getElementById("oldCurrency");
+            let select2 = document.getElementById("newCurrency");
+            let keys = Object.keys(arr.results);
+            for (key of keys) {
+                select1.appendChild(document.createTextNode('<option>' + key + '</option>'));
+                select2.appendChild(document.createTextNode('<option>' + key + '</option>'));
+            }
+            console.log(select1);
+        }
+    
+    </script>
+    <script>
+        function convert(){
+
+        }
+
+    </script>
+</html>
